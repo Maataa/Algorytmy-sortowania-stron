@@ -1,0 +1,29 @@
+with open("C:/Users/Marcel/PycharmProjects/pythonProject/pages10.txt") as f:
+    pages= [int(x) for x in f.read().split(",")]
+
+# with open("C:/Users/Marcel/PycharmProjects/pythonProject/pages100.txt") as f:
+#     pages= [int(x) for x in f.read().split(",")]
+
+# with open("C:/Users/Marcel/PycharmProjects/pythonProject/pages1000.txt") as f:
+#     pages= [int(x) for x in f.read().split(",")]
+from numpy import random
+
+n=1000
+pages = random.randint(20, size=(n))
+cap=3
+queue=[]    #kolejka
+hit=0       #strona w kolejce, ktora
+for page in pages:
+    if page not in queue:
+        if len(queue)<cap:        #jezeli kolejka nie jest pelna
+            queue.append(page)  #kolejka nie jest pelna, wiec dodajemy strone
+            print(queue)
+        else:
+            del queue[0]   #pierwsze wykonane, wiec usuwamy
+            queue.append(page)  #dodajemy na koniec kolejki kolejna strone
+            print(queue)
+    else:
+        print(queue)
+        hit+=1
+print("Page fault:", len(pages)-hit)
+print("Page fault rate:", str(100*(len(pages)-hit)/len(pages))+'%')

@@ -1,0 +1,33 @@
+# with open("C:/Users/Marcel/PycharmProjects/pythonProject/pages10.txt") as f:
+#     pages= [int(x) for x in f.read().split(",")]
+
+# with open("C:/Users/Marcel/PycharmProjects/pythonProject/pages100.txt") as f:
+#     pages= [int(x) for x in f.read().split(",")]
+
+# with open("C:/Users/Marcel/PycharmProjects/pythonProject/pages1000.txt") as f:
+#     pages= [int(x) for x in f.read().split(",")]
+# #
+from numpy import random
+
+n=1000
+pages = random.randint(20, size=(n))
+cap=3         #pojemnosc strony
+queue=[]    #kolejka
+hit=0       #strony ktore byly wczesniej w pamieci
+for page in pages:
+    print(page, "- ", end="")
+    if page not in queue:
+        if len(queue)<cap:        # jezeli kolejka nie jest pelna
+            queue.insert(0, page)  # kolejka nie jest pelna, wiec dodajemy strone
+            print(queue)
+        else:
+            queue.pop()  #  usuniecie ostatniego(najstarszego)
+            queue.insert(0, page)  # dodanie na poczatek najswieższego
+            print(queue)
+    else:                       # jezeli jest w queue
+        queue.remove(page)      # zamieniamy strone na ta sama, ale zmienia miejsce na najswieższe
+        queue.insert(0, page)
+        print(queue)
+        hit+=1     #strony wczesniej w pamieci
+print("page fault:", len(pages)-hit)
+print("Page fault rate:", str(100*(len(pages)-hit)/len(pages))+'%')
